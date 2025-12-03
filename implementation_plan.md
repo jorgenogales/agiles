@@ -14,12 +14,12 @@ The system will be a microservices-based architecture running on Google Kubernet
 ## 2. Components
 
 ### 2.1. Frontend
-A web-based interface consisting of static HTML pages with JavaScript for interactivity. This will provide the user interface for video uploads and for reviewing and editing the AI-generated metadata. These static assets will be served directly to the browser.
+A Single Page Application (SPA) built with React and Vite. The static assets (HTML, CSS, JS) will be embedded within the **Video Upload Service** container and served by the Go backend. This simplifies deployment by having a single artifact for both the API and the UI.
 
 ### 2.2. Backend Services (Microservices in Go on GKE)
 All backend microservices will be written in **Go**. They will be designed to be lightweight and efficient, leveraging Go's strong support for concurrency to handle requests.
 
-*   **Video Upload Service:** Handles multipart video uploads from the frontend and saves the video files to a GCS bucket. After the upload, it triggers the video processing orchestrator.
+*   **Video Upload Service:** Serves the static frontend assets and handles multipart video uploads from the frontend. It saves video files to a GCS bucket and triggers the video processing orchestrator.
 *   **Video Processing Orchestrator:** A service that is called synchronously by the Video Upload Service. It orchestrates the video analysis and metadata generation process by calling Gemini and the Frame Extraction Service.
 *   **Frame Extraction Service:** Extracts video frames from given timestamps. It will save these thumbnails to a GCS bucket.
 *   **Metadata Service:** A CRUD service for managing video metadata. It will store and retrieve metadata from **GCS** as JSON files. This includes video titles, descriptions, thumbnail URLs, and processing status, linking metadata with the uploaded video.
