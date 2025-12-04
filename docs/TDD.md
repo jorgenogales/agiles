@@ -131,3 +131,9 @@ We will adopt a simplified, monolithic architecture deployed on Google Kubernete
 *   **Scalability**: The application, running on GKE, can be scaled by adjusting the number of pods. Since the application is stateless (all state is in GCS), horizontal scaling is straightforward.
 *   **Security**: GKE and GCS have robust security features. To simplify deployment, the application will use the standard Compute Engine service account associated with the GKE nodes, ensuring it has the necessary scopes for GCS and Vertex AI.
 *   **Reliability**: GKE and GCS are highly available services. The synchronous nature of the upload process means that any failure in the chain (upload, AI processing, thumbnailing) will result in an immediate error returned to the user, ensuring a predictable experience.
+
+### 7. Local Development
+*   **Environment:** For local development, the application should run within a standard Python virtual environment (e.g., `venv`) by directly executing the Flask entry point script.
+*   **Infrastructure Emulation:**
+    *   **Compute:** Instead of deploying to GKE, the developer will run the Flask app locally (`python main.py`).
+    *   **Storage:** To avoid dependency on remote GCS buckets during development and testing, the application should be configurable to use a local temporary folder for storing videos, thumbnails, and metadata files. The code should abstract the storage layer to switch between GCS (production) and Local File System (development) based on an environment variable (e.g., `STORAGE_BACKEND=local`).
