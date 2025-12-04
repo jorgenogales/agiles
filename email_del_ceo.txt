@@ -23,3 +23,9 @@ En resumen: Subimos el vídeo, y el sistema nos lo deja listo para publicar en u
 Poned esto en marcha. Quiero ver una propuesta de implementación rápida.
 
 ¡Gracias!
+
+PD: Se me olvidaba. Toda esta metadata que estamos generando automáticamente tiene que servir para algo más. Quiero una especie de "biblioteca" en la plataforma. Una página donde podamos ver todos los vídeos que tenemos en el sistema, con su portada, título y sinopsis de un vistazo.
+
+Y que desde ahí, con un solo clic, podamos ir a una página dedicada para ese vídeo, donde se vea todo en grande: la portada, los thumbnails, la sinopsis completa y, por supuesto, el reproductor para verlo. Que sea fácil de navegar y que dé ganas de consumir más contenido.
+
+Esto nos va a servir para tener un catálogo interno potente y, quién sabe, en el futuro de cara al público. ¡A darle caña!
