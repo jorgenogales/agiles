@@ -10,3 +10,15 @@
 [debug] [2025-12-04T09:43:22.702Z] > authorizing via signed-in user (dev@alovola.com)
 [debug] [2025-12-04T09:43:22.702Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
 [debug] [2025-12-04T09:43:22.702Z] > authorizing via signed-in user (dev@alovola.com)
+[debug] [2025-12-04T10:22:25.299Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-12-04T10:22:25.300Z] > authorizing via signed-in user (dev@alovola.com)
+[debug] [2025-12-04T10:22:25.311Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-12-04T10:22:25.311Z] > authorizing via signed-in user (dev@alovola.com)
+[debug] [2025-12-04T10:22:25.317Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-12-04T10:22:25.317Z] > authorizing via signed-in user (dev@alovola.com)
+[debug] [2025-12-04T10:22:25.318Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-12-04T10:22:25.318Z] > authorizing via signed-in user (dev@alovola.com)
+[debug] [2025-12-04T10:22:25.319Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-12-04T10:22:25.319Z] > authorizing via signed-in user (dev@alovola.com)
+[debug] [2025-12-04T10:22:25.320Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-12-04T10:22:25.320Z] > authorizing via signed-in user (dev@alovola.com)
