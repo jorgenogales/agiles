@@ -1,4 +1,6 @@
 .gemini
 .gemini/**
-
+.pytest_cache
 .env*
+venv
+deployment.yaml

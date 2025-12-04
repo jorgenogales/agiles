@@ -39,7 +39,8 @@ A single Python Flask application running on Google Kubernetes Engine (GKE) will
 5.  **Return Confirmation:** The Flask application returns a success message to the user, including the generated UUID and the full GCS path.
 
 ### 5. Deployment & Infrastructure
-*   **Container:** Docker image built via Cloud Build.
+*   **Container:** Docker image built via Cloud Build. Both the Docker image name and Kubernetes service name will be prefixed with the user's LDAP (e.g., `[LDAP]-agiles-upload-service`).
+*   **Deployment Packaging:** All deployable code artifacts will be enclosed within a dedicated deployment folder for clarity and ease of management.
 *   **Orchestration:** Deployed to GKE cluster [LDAP]-agiles-cluster.
 *   **Security:** Uses Workload Identity or standard Node Service Account for GCS access.
 
