@@ -15,8 +15,8 @@ So that **it is stored in a Google Cloud Storage (GCS) bucket with a structured 
 
 2.  **Storage Structure:**
     *   Upon upload, a unique UUID is generated.
-    *   The file is stored in the GCS bucket `agiles-video-upload`.
-    *   The path format is: `gs://agiles-video-upload/<uuid>/video.mp4`.
+    *   The file is stored in the GCS bucket [LDAP]-agiles-video-upload.
+    *   The path format is: `gs://[LDAP]-agiles-video-upload/<uuid>/video.mp4`.
 
 3.  **Confirmation:**
     *   After a successful upload, the user receives a confirmation message displaying the generated UUID and the GCS path.

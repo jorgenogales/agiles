@@ -8,9 +8,9 @@ This document outlines the technical design for the simplified "Simple Video Upl
 A single Python Flask application running on Google Kubernetes Engine (GKE) will handle the file upload requests and stream the data directly to Google Cloud Storage (GCS).
 
 ```
-+------------------+      (1) Upload Video      +-------------------------+      (2) Store Object      +-------------------------+
-|   User Browser   | -------------------------> | Python Flask App (GKE)  | -------------------------> | Google Cloud Storage    |
-+------------------+                            +-------------------------+                            +-------------------------+
++------------------+      (1) Upload Video      +------------------------------------------+      (2) Store Object      +-------------------------------------------------+
+|   User Browser   | -------------------------> | Python Flask App (GKE: [LDAP]-agiles-cluster) | -------------------------> | Google Cloud Storage (Bucket: [LDAP]-agiles-video-upload) |
++------------------+                            +------------------------------------------+                               +-------------------------------------------------+
 ```
 
 ### 3. Components
@@ -24,19 +24,26 @@ A single Python Flask application running on Google Kubernetes Engine (GKE) will
     1.  Receive file from request.
     2.  Generate UUID.
     3.  Initialize GCS client.
-    4.  Upload file to `agiles-video-upload` bucket with blob name `<uuid>/video.mp4`.
+    4.  Upload file to [LDAP]-agiles-video-upload bucket with blob name `<uuid>/video.mp4`.
     5.  Return success message with UUID.
 
 #### 3.2. Persistence (GCS)
-*   **Bucket:** `agiles-video-upload`
+*   **Bucket:** [LDAP]-agiles-video-upload
 *   **Object Key Format:** `<uuid>/video.mp4`
 
-### 4. Deployment & Infrastructure
+### 4. Data Flow
+1.  **User uploads video:** The user selects a video file via the web interface and initiates the upload.
+2.  **Flask receives file:** The Flask application receives the video file.
+3.  **Generate UUID:** A unique UUID is generated for the uploaded file.
+4.  **Upload to GCS:** The Flask application uploads the video file to the GCS bucket `[LDAP]-agiles-video-upload` using the structure `/<uuid>/video.mp4`.
+5.  **Return Confirmation:** The Flask application returns a success message to the user, including the generated UUID and the full GCS path.
+
+### 5. Deployment & Infrastructure
 *   **Container:** Docker image built via Cloud Build.
-*   **Orchestration:** Deployed to GKE cluster `agiles-cluster`.
+*   **Orchestration:** Deployed to GKE cluster [LDAP]-agiles-cluster.
 *   **Security:** Uses Workload Identity or standard Node Service Account for GCS access.
 
-### 5. Local Development
+### 6. Local Development
 *   **Run:** `python main.py`
 *   **Storage Abstraction:**
     *   **Production:** Uses `google.cloud.storage`.

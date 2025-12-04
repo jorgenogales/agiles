@@ -25,7 +25,7 @@ We need a basic mechanism to reliably upload video files to cloud storage with a
 
 #### 4.2 Persistence Layer
 *   **Storage:** Google Cloud Storage (GCS).
-*   **Bucket Name:** `agiles-video-upload`.
+*   **Bucket Name:** [LDAP]-agiles-video-upload.
 *   **Structure:** `/<uuid>/video.mp4`.
 
 ### 5. User Experience (UX)
