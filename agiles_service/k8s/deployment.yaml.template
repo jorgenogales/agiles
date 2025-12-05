@@ -1,22 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: [LDAP]-agiles-upload-service
+  name: [LDAP]-agiles-service
   labels:
-    app: [LDAP]-agiles-upload-service
+    app: [LDAP]-agiles-service
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: [LDAP]-agiles-upload-service
+      app: [LDAP]-agiles-service
   template:
     metadata:
       labels:
-        app: [LDAP]-agiles-upload-service
+        app: [LDAP]-agiles-service
     spec:
       containers:
-      - name: agiles-upload-service
-        image: gcr.io/YOUR_PROJECT_ID/[LDAP]-agiles-upload-service:latest
+      - name: agiles-service
+        image: gcr.io/YOUR_PROJECT_ID/[LDAP]-agiles-service:latest
         imagePullPolicy: Always
         ports:
         - containerPort: 8080
@@ -29,11 +29,11 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: [LDAP]-agiles-upload-service
+  name: [LDAP]-agiles-service
 spec:
   type: ClusterIP
   selector:
-    app: [LDAP]-agiles-upload-service
+    app: [LDAP]-agiles-service
   ports:
   - protocol: TCP
     port: 80
@@ -56,6 +56,6 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: [LDAP]-agiles-upload-service
+            name: [LDAP]-agiles-service
             port:
               number: 80

@@ -31,7 +31,7 @@ Set these variables in your terminal for convenience:
 export PROJECT_ID=$(gcloud config get-value project)
 # IMPORTANT: Change "your-ldap" to your actual LDAP or preferred unique identifier.
 export LDAP=$(gcloud config get-value account | sed 's/@.*//' | tr -d '.')
-export IMAGE_NAME="gcr.io/${PROJECT_ID}/${LDAP}-agiles-upload-service:latest"
+export IMAGE_NAME="gcr.io/${PROJECT_ID}/${LDAP}-agiles-service:latest"
 export CLUSTER_NAME="${LDAP}-agiles-cluster"
 export ZONE="europe-southwest1" # Change to your preferred zone
 export BUCKET_NAME="${LDAP}-agiles-video-upload"
@@ -50,7 +50,7 @@ gcloud storage buckets create gs://${BUCKET_NAME} --location=EU
 
 ### 3. Build and Push Docker Image
 
-Navigate to this directory (`agiles-upload-service`) and submit the build:
+Navigate to this directory (`agiles-service`) and submit the build:
 
 ```bash
 gcloud builds submit --tag ${IMAGE_NAME} .

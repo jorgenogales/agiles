@@ -6,30 +6,38 @@ This folder contains all the necessary files to deploy the Simple Video Upload S
 
 1.  **Google Cloud Project**: Ensure you have an active GCP project.
 2.  **Tools Installed**:
-    *   `gcloud` CLI
-    *   `kubectl`
-3.  **APIs Enabled**:
-    *   Kubernetes Engine API
-    *   Cloud Build API
-    *   Google Container Registry API (or Artifact Registry)
-
+    *   `gcloud` CLI https://docs.cloud.google.com/sdk/docs/install-sdk
+    *   `kubectl` gcloud components install kubectl
+4.  Login with your account gcloud init --skip-diagnostics and select the project *******
 
 ## Deployment Steps
 
 ### 1. Setup Environment Variables
 
-Set these variables in your terminal for convenience:
+Set these variables in your terminal.
 
+***For Linux and macOS (in a Bash shell):***
 ```bash
 export PROJECT_ID=$(gcloud config get-value project)
 export LDAP=$(gcloud config get-value account | sed 's/@.*//' | tr -d '.')
-export IMAGE_NAME="gcr.io/${PROJECT_ID}/${LDAP}-agiles-upload-service:latest"
+export IMAGE_NAME="gcr.io/${PROJECT_ID}/${LDAP}-agiles-service:latest"
 export CLUSTER_NAME="agiles-cluster"
 export ZONE="europe-southwest1" # Change to your preferred zone
 export BUCKET_NAME="${LDAP}-agiles-video-upload"
 ```
 
+***For Windows (in a PowerShell terminal):***
+```powershell
+$env:PROJECT_ID = (gcloud config get-value project)
+$env:LDAP = (gcloud config get-value account) -replace '@.*','' -replace '\.',''
+$env:IMAGE_NAME = "gcr.io/$($env:PROJECT_ID)/$($env:LDAP)-agiles-service:latest"
+$env:CLUSTER_NAME = "agiles-cluster"
+$env:ZONE = "europe-southwest1" # Change to your preferred zone
+$env:BUCKET_NAME = "$($env:LDAP)-agiles-video-upload"
+```
+
 **Before proceeding, ensure you have your environment variables set. We will generate the `deployment.yaml` file from the template in step 4.**
+
 **Get Cluster Credentials:**
 ```bash
 gcloud container clusters get-credentials ${CLUSTER_NAME} --zone ${ZONE}

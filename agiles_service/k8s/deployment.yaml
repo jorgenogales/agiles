@@ -1,22 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: admin-agiles-upload-service
+  name: admin-agiles-service
   labels:
-    app: admin-agiles-upload-service
+    app: admin-agiles-service
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: admin-agiles-upload-service
+      app: admin-agiles-service
   template:
     metadata:
       labels:
-        app: admin-agiles-upload-service
+        app: admin-agiles-service
     spec:
       containers:
-      - name: agiles-upload-service
-        image: gcr.io/correcaminos-11/admin-agiles-upload-service:latest
+      - name: agiles-service
+        image: gcr.io/correcaminos-11/admin-agiles-service:latest
         imagePullPolicy: Always
         ports:
         - containerPort: 8080
@@ -29,11 +29,11 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: admin-agiles-upload-service
+  name: admin-agiles-service
 spec:
   type: ClusterIP
   selector:
-    app: admin-agiles-upload-service
+    app: admin-agiles-service
   ports:
   - protocol: TCP
     port: 80
@@ -56,6 +56,6 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: admin-agiles-upload-service
+            name: admin-agiles-service
             port:
               number: 80
