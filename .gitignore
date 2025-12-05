@@ -217,3 +217,5 @@ __marimo__/
 
 .gemini
 .gemini/**
+
+agiles_service/k8s/deployment.yaml
