@@ -1,4 +1,7 @@
-From: Brock L. Chain <brock.chain@productiveprocrastination.io> To: ${PARTICIPANT} <participant@productiveprocrastination.io> Sent: Tuesday, December 2, 2025 8:15 AM Subject: 🚨 PIVOT: The Feature That Will Save the Digital Ecosystem
+From: Brock L. Chain <brock.chain@productiveprocrastination.io>
+To: ${PARTICIPANT} <participant@productiveprocrastination.io>
+Sent: Tuesday, December 2, 2025 8:15 AM
+Subject: 🚨 PIVOT: The Feature That Will Save the Digital Ecosystem
 
 Hey ${PARTICIPANT},
 
