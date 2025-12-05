@@ -1,0 +1,17 @@
+# Ignore .git directory
+.git
+# Ignore virtual environments
+venv/
+__pycache__/
+*.pyc
+
+# Ignore temporary files created during development/processing
+.env
+*.log
+temp_video_*
+temp_thumbnail_*
+
+# Ignore Docker-related files that shouldn't be copied into the image
+Dockerfile
+.dockerignore
+k8s/
