@@ -100,6 +100,26 @@ Adhere to best practices for Git version control.
 *   **`.gitignore`:** Maintain a comprehensive `.gitignore` file to exclude temporary files, virtual environments, and sensitive data.
 *   **No Credentials in Git:** Never commit API keys, passwords, or other sensitive information directly to the repository. Use environment variables or a secure secrets management system.
 
+## 8. Container Images
+
+For containerizing applications, follow these guidelines:
+
+*   **Local Build (Preferred):** If Docker or Podman is installed and available in the local environment, use it to build and manage container images.
+
+    ```bash
+    docker build -t your-image-name:tag .
+    docker push your-image-name:tag
+    # Or for Podman
+    podman build -t your-image-name:tag .
+    podman push your-image-name:tag
+    ```
+*   **Cloud Build (Fallback):** If local containerization tools are not available, trigger builds using Google Cloud Build with the `gcloud CLI`.
+
+    ```bash
+    gcloud builds submit --tag gcr.io/your-project-id/your-image-name:tag .
+    ```
+*   **Registry:** Push images to a reliable container registry (e.g., Google Cloud Artifact Registry).
+
 
 # Core Mandates
 
