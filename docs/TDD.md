@@ -1,18 +1,22 @@
-# Technical Design Document - Video Upload MVP
+# Technical Design Document - Intelligent Asset Enrichment MVP
 
 ## 1. Introduction
-This document outlines the architecture for the Video Upload MVP. The system limits scope to file uploads and listing, strictly utilizing Google Cloud Storage (GCS) as the backend.
+This document outlines the architecture for the "Intelligent Asset Enrichment" MVP. The system extends the basic upload/list functionality to include Generative AI processing for metadata and thumbnail generation, along with video playback capabilities, utilizing Google Cloud Storage (GCS) and Vertex AI.
 
 ## 2. System Overview
 
 ### 2.1 High-Level Architecture
-The application is a monolithic Python Flask service. It handles HTTP requests and communicates directly with GCS.
+The application is a monolithic Python Flask service. It handles HTTP requests, orchestrates AI processing via Vertex AI, and manages data in GCS.
 
 ```mermaid
 graph LR
     Client[Browser] -->|POST /upload| Flask[Flask App]
     Flask -->|Store Video| GCS[GCS Bucket]
-    GCS -->|List Blobs| Flask
+    Flask -->|Analyze Video| Vertex[Vertex AI (Gemini)]
+    Vertex -->|Metadata & Thumbnail| Flask
+    Flask -->|Store Metadata & Thumbnail| GCS
+    GCS -->|List Blobs & Metadata| Flask
+    Client -->|GET /watch| Flask
 ```
 
 ## 3. Key Components
@@ -20,32 +24,56 @@ graph LR
 ### 3.1 Web Application (Flask)
 -   **Framework:** Flask.
 -   **Deployment:** Local / Kubernetes.
--   **State:** Stateless; relies on GCS for data persistence.
+-   **Responsibilities:** Request handling, orchestration of GCS I/O and Vertex AI calls.
 
 ### 3.2 Storage (GCS Bucket)
-The GCS bucket acts as the file system.
+The GCS bucket acts as the file system and database.
 
 **Bucket Structure:**
-*   `{random_id}/video.mp4`: The video file, where `random_id` is a unique identifier generated for each upload.
+For each video, a "directory" (prefix) is created using a unique ID:
+*   `{random_id}/video.mp4`: The original video file.
+*   `{random_id}/metadata.json`: JSON file containing AI-generated title, description, and tags.
+*   `{random_id}/thumbnail.png`: The AI-generated thumbnail image.
+
+### 3.3 AI Service (Vertex AI)
+-   **Model:** gemini-2.5-flash
+-   **Task:** Analyze video content to generate text metadata.
 
 ## 4. Workflows
 
-### 4.1 Upload
+### 4.1 Upload & Enrich
 1.  **Receive:** User sends `POST /upload` with a video file.
-2.  **Generate ID:** App generates a unique random ID for the video.
-3.  **Save:** App streams the file to GCS under the path `{random_id}/video.mp4`.
-4.  **Respond:** App redirects user to the Video List page.
+2.  **Generate ID:** App generates a unique `random_id`.
+3.  **Store Video:** App streams the file to GCS at `{random_id}/video.mp4`.
+4.  **Enrich (AI Processing):**
+    *   App sends a request to Vertex AI with the GCS URI of the video.
+    -   Prompt model to generate: Title, Description, and Tags.
+5.  **Extract Thumbnail:**
+    *   App uses standard Python libraries (e.g., OpenCV, moviepy) to extract the first frame of the video as a thumbnail.
+6.  **Store Artifacts:**
+    *   Save Title, Description, Tags to `{random_id}/metadata.json`.
+    *   Save Thumbnail to `{random_id}/thumbnail.png`.
+6.  **Respond:** Redirect user to the Dashboard.
 
-### 4.2 Video List
-1.  **List:** App iterates over blobs in the GCS bucket to find all video files (e.g., objects with paths like `*/video.mp4`).
-2.  **Extract IDs:** For each video file, extract the `random_id` from its path.
-3.  **Render:** HTML template displays a list of video identifiers (random IDs).
+### 4.2 Video List (Dashboard)
+1.  **Scan:** App lists directories (prefixes) in the GCS bucket.
+2.  **Fetch Data:** For each `random_id`:
+    *   Read `{random_id}/metadata.json` (fallback to raw filename if missing).
+    *   Generate signed URLs (or public URLs) for `{random_id}/thumbnail.png`.
+3.  **Render:** Display a grid/list of videos with their AI-generated thumbnails and metadata.
+
+### 4.3 Video Player
+1.  **Request:** User requests `/watch/{random_id}`.
+2.  **Fetch:** App retrieves metadata and generates a signed URL for `{random_id}/video.mp4`.
+3.  **Render:** HTML page with an HTML5 video player and video details.
 
 ## 5. Technology Stack
 -   **Language:** Python 3.9+
 -   **Web Framework:** Flask
 -   **Cloud Storage SDK:** `google-cloud-storage`
+-   **AI SDK:** `google-cloud-aiplatform` (Vertex AI)
 
 ## 6. Trade-offs & Risks
--   **Scalability:** Listing thousands of files from GCS directly may become slow.
--   **Metadata:** No separate metadata store means we only know what's in the filename and GCS system metadata.
+-   **Latency:** AI processing is synchronous during upload. Large videos might time out the request. *Mitigation:* Use async processing (background tasks) in a future iteration. For MVP, we will assume short videos or long timeouts.
+-   **Cost:** Vertex AI calls incur costs per request.
+-   **Consistency:** GCS is eventually consistent, though strongly consistent for read-after-write in most regions. Metadata might lag slightly if listing immediately.

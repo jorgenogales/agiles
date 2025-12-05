@@ -41,6 +41,35 @@ def upload_file(file_obj, destination_blob_name, content_type=None):
         logger.error(f"Failed to upload file: {e}")
         raise
 
+def upload_text(text_content, destination_blob_name, content_type="text/plain"):
+    """
+    Uploads text content to the bucket.
+
+    Args:
+        text_content (str): The text content to upload.
+        destination_blob_name (str): The path of the GCS object.
+        content_type (str): The content type of the file.
+
+    Returns:
+        str: The public HTTP URL of the uploaded file.
+    """
+    bucket_name = os.environ.get("GCS_BUCKET_NAME")
+    if not bucket_name:
+        logger.error("GCS_BUCKET_NAME environment variable not set.")
+        raise ValueError("GCS_BUCKET_NAME environment variable not set.")
+
+    storage_client = get_storage_client()
+    bucket = storage_client.bucket(bucket_name)
+    blob = bucket.blob(destination_blob_name)
+
+    try:
+        blob.upload_from_string(text_content, content_type=content_type)
+        logger.info(f"Text uploaded to {destination_blob_name} in bucket {bucket_name}.")
+        return f"https://storage.googleapis.com/{bucket_name}/{destination_blob_name}"
+    except Exception as e:
+        logger.error(f"Failed to upload text: {e}")
+        raise
+
 def list_files(prefix=None):
     """
     Lists all the blobs in the bucket that begin with the prefix.

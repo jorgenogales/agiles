@@ -35,11 +35,28 @@
         {% for video in videos %}
         <div class="col">
           <div class="card h-100 shadow-sm">
+            {% if video.thumbnail_url %}
+              <img src="{{ video.thumbnail_url }}" class="card-img-top" alt="Video Thumbnail" style="height: 180px; object-fit: cover;">
+            {% else %}
+              <div class="card-img-top bg-secondary d-flex align-items-center justify-content-center" style="height: 180px;">
+                  <span class="text-white">No Thumbnail</span>
+              </div>
+            {% endif %}
             <div class="card-body">
-              <h5 class="card-title text-truncate" title="{{ video.id }}">Video ID: {{ video.id }}</h5>
-              <p class="card-text text-muted">
+              <h5 class="card-title text-truncate" title="{{ video.title }}">
+                  <a href="{{ url_for('watch_video', video_id=video.id) }}" class="text-decoration-none text-dark stretched-link">
+                      {{ video.title }}
+                  </a>
+              </h5>
+              <p class="card-text small text-muted mb-2">
                 Uploaded: {{ video.created_at.strftime('%Y-%m-%d %H:%M') if video.created_at else 'Unknown' }}
               </p>
+              <p class="card-text">{{ video.description|truncate(100) }}</p>
+              <div class="mb-2">
+                  {% for tag in video.tags %}
+                  <span class="badge bg-secondary">{{ tag }}</span>
+                  {% endfor %}
+              </div>
             </div>
           </div>
         </div>
