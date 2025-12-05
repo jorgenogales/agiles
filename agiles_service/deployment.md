@@ -8,7 +8,7 @@ This folder contains all the necessary files to deploy the Simple Video Upload S
 2.  **Tools Installed**:
     *   `gcloud` CLI https://docs.cloud.google.com/sdk/docs/install-sdk
     *   `kubectl` gcloud components install kubectl
-4.  Login with your account gcloud init --skip-diagnostics and select the project *******
+4.  Login with your account `gcloud init --skip-diagnostics` and select the project *******
 
 ## Deployment Steps
 
