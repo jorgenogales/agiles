@@ -1,13 +1,13 @@
 From: Brock L. Chain <brock.chain@productiveprocrastination.io>
-Sent: Tuesday, December 2, 2025 8:15 AM
 To: ${PARTICIPANT} <participant@productiveprocrastination.io>
+Sent: Tuesday, December 2, 2025 8:15 AM
 Subject: 🚀 Welcome to the Rocket Ship, Alpha! Time for High-Leverage Synergy.
 
 Hey ${PARTICIPANT},
 
 Welcome aboard the most disruptive company in the space! You know, I'd scheduled four weeks of deep-dive onboarding, but frankly, the universe had other plans. Turns out our entire engineering cohort decided to "quiet quit" all at once—something about a lack of "work-life balance" and "legal overtime compliance." These low-frequency thinkers just don't understand the hustle required to truly 10X, but hey, their loss is your high-leverage opportunity!
 
-Anyway, the board needs a killer MVP demo of a simple app that allows to upload a video, stores it on GCS, uses Gemini on Vertex to obtain a summary and some tags, and generates a thumbnail. Everything shall be stored in GCS, and a webpage must list all videos available and users must be able to click on one video to play it. This needs to be done by EOW. Since you're the freshest brain in the room, you get to own the entire delivery. It’s basically a piece of cake built on bleeding-edge tech.
+Anyway, the board needs a killer MVP demo. Right now, we're not fully leveraging our video catalog. Your mission, should you choose to accept it (and you will, champ!), is to build a simple app that takes uploaded videos, generates a slick thumbnail, and uses our bleeding-edge Gen AI on Vertex to cook up a killer description, a catchy title, and some high-value metadata tags. The app absolutely *must* present all this rich information, and naturally, our users need to be able to effortlessly view these videos. This needs to be done by EOW. Since you're the freshest brain in the room, you get to own the entire delivery. It’s basically a piece of cake built on bleeding-edge tech.
 
 Speaking of flow state, I’m spontaneously jetting off to my bio-hacking retreat in the Maldives—gotta keep the CEO chakra aligned, you know? Unfortunately, that means I can't deliver the demo. You'll need to step up and present to the board. Just remember, they only care about disruption and ROI, so keep it tight and visionary.
 

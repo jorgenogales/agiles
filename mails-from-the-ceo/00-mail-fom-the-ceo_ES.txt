@@ -1,0 +1,23 @@
+From: Brock L. Chain <brock.chain@productiveprocrastination.io>
+To: ${PARTICIPANT} <participant@productiveprocrastination.io>
+Sent: Tuesday, December 2, 2025 8:15 AM
+Subject: ¡Acelerar la subida de vídeos con un poco de magia de IA! 🚀
+
+¡Equipo!
+
+Quería compartir una idea sencilla para quitarnos un montón de trabajo de encima y, de paso, ganar más pasta.
+
+Actualmente no estamos sacando todo el jugo a nuestro catálogo de vídeos. El plan es montar una funcionalidad súper inteligente en el backend. La idea es que, cuando alguien suba un vídeo, el sistema haga casi todo el trabajo sucio por nosotros, y de forma automática.
+
+Lo que tiene que hacer, sin entrar en detalles técnicos (que aburren):
+
+*   **Generar Miniatura TOP:** Queremos que la máquina nos dé las mejores imágenes de portada (las thumbnails) para que la gente haga clic sin pensarlo dos veces. ¡Que sean las más vendibles!
+*   **Generar Descripción y Título con Gen AI:** Que nuestra IA de Vertex nos redacte automáticamente una sinopsis decente y nos sugiera un título potente y que posicione bien, para no tener que calentarnos la cabeza.
+*   **Generar Etiquetas de Metadatos:** ¡Esto es clave! Que nuestra IA también genere esas etiquetas de metadatos tan importantes para que todo esté súper bien organizado y fácil de encontrar.
+*   **Presentar Toda la Información:** La aplicación debe mostrar toda esta información generada de forma impecable, y los usuarios, por supuesto, tienen que poder ver los vídeos sin problemas.
+
+En resumen: Subimos el vídeo, y el sistema nos lo deja listo para publicar en un 90%. Menos tiempo perdido, mejor calidad, más clics. Ganamos todos.
+
+Poned esto en marcha. Quiero ver una propuesta de implementación rápida.
+
+¡Gracias!
