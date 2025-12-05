@@ -1,0 +1,61 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: [LDAP]-agiles-service
+  labels:
+    app: [LDAP]-agiles-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: [LDAP]-agiles-service
+  template:
+    metadata:
+      labels:
+        app: [LDAP]-agiles-service
+    spec:
+      containers:
+      - name: agiles-service
+        image: gcr.io/YOUR_PROJECT_ID/[LDAP]-agiles-service:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+        env:
+        - name: GCS_BUCKET_NAME
+          value: "[LDAP]-agiles-video-upload"
+        # - name: STORAGE_BACKEND
+        #   value: "gcs" # Default is gcs, set to local for testing if needed
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: [LDAP]-agiles-service
+spec:
+  type: ClusterIP
+  selector:
+    app: [LDAP]-agiles-service
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 8080
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: [LDAP]-agiles-upload-ingress
+  annotations:
+    # Use GKE ingress controller.
+    # This assumes the user has configured a default IngressClass.
+    # If not, they may need to specify ingressClassName: gce
+    kubernetes.io/ingress.class: "gce" # Explicitly specify GCE Ingress controller
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: [LDAP]-agiles-service
+            port:
+              number: 80
