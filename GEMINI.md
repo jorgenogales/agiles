@@ -93,12 +93,7 @@ Well-documented code is easier to understand, maintain, and extend.
 
 ## 7. Version Control
 
-Adhere to best practices for Git version control.
-
-*   **Meaningful Commits:** Write clear, concise, and descriptive commit messages.
-*   **Feature Branches:** Work on separate feature branches and use pull requests for code reviews.
-*   **`.gitignore`:** Maintain a comprehensive `.gitignore` file to exclude temporary files, virtual environments, and sensitive data.
-*   **No Credentials in Git:** Never commit API keys, passwords, or other sensitive information directly to the repository. Use environment variables or a secure secrets management system.
+Do not attempt to work with Git or any other version control system. It is not your responsibility to work with version control systems. Leave this to the user.
 
 ## 8. Container Images
 
