@@ -8,11 +8,18 @@ This folder contains all the necessary files to deploy the Simple Video Upload S
 2.  **Tools Installed**:
     *   `gcloud` CLI https://docs.cloud.google.com/sdk/docs/install-sdk
     *   `kubectl` gcloud components install kubectl
-4.  Login with your account `gcloud init --skip-diagnostics` and select the project *******
 
 ## Deployment Steps
 
-### 1. Setup Environment Variables
+### 1. Authenticate and Set Project
+
+First, authenticate your gcloud CLI and set the active project.
+
+```bash
+gcloud init --skip-diagnostics
+```
+
+### 2. Setup Environment Variables
 
 Set these variables in your terminal.
 
@@ -87,17 +94,17 @@ Once the Ingress is provisioned (this may take a few minutes), you can get its e
 kubectl get ingress ${LDAP}-agiles-upload-ingress
 ```
 
-
-
-
-
-
-
-
-
-
 ### 6. Permissions related stuff
-# Permissions
-gcloud storage buckets add-iam-policy-binding gs://[LDAP]-agiles-video-upload --member="principal://iam.googleapis.com/projects/639440312764/locations/global/workloadIdentityPools/agiletv-workshop.svc.id.goog/subject/ns/default/sa/agiles-ksa"--role="roles/storage.objectAdmin"
-gcloud projects add-iam-policy-binding agiletv-workshop  --member="principal://iam.googleapis.com/projects/639440312764/locations/global/workloadIdentityPools/agiletv-workshop.svc.id.goog/subject/ns/default/sa/agiles-ksa" --role='roles/storage.objectAdmin'
 
+# Permissions
+
+```bash
+gcloud storage buckets add-iam-policy-binding gs://[LDAP]-agiles-video-upload \
+    --member="principal://iam.googleapis.com/projects/639440312764/locations/global/workloadIdentityPools/agiletv-workshop.svc.id.goog/subject/ns/default/sa/agiles-ksa" \
+    --role="roles/storage.objectAdmin"
+
+
+gcloud projects add-iam-policy-binding agiletv-workshop \
+    --member="principal://iam.googleapis.com/projects/639440312764/locations/global/workloadIdentityPools/agiletv-workshop.svc.id.goog/subject/ns/default/sa/agiles-ksa" \
+    --role='roles/storage.objectAdmin'
+```
