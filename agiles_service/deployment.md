@@ -98,6 +98,6 @@ kubectl get ingress ${LDAP}-agiles-upload-ingress
 
 ### 6. Permissions related stuff
 # Permissions
-gcloud storage buckets add-iam-policy-binding gs://[LDAP]-agiles-video-upload --member="serviceAccount:agiles-gcs-reader@agiletv-workshop.iam.gserviceaccount.com" --role="roles/storage.objectAdmin"
-gcloud projects add-iam-policy-binding agiletv-workshop \ --member='serviceAccount:agiles-gcs-reader@agiletv-workshop.iam.gserviceaccount.com' \ --role='roles/storage.objectAdmin'
+gcloud storage buckets add-iam-policy-binding gs://[LDAP]-agiles-video-upload --member="principal://iam.googleapis.com/projects/639440312764/locations/global/workloadIdentityPools/agiletv-workshop.svc.id.goog/subject/ns/default/sa/agiles-ksa"--role="roles/storage.objectAdmin"
+gcloud projects add-iam-policy-binding agiletv-workshop  --member="principal://iam.googleapis.com/projects/639440312764/locations/global/workloadIdentityPools/agiletv-workshop.svc.id.goog/subject/ns/default/sa/agiles-ksa" --role='roles/storage.objectAdmin'
 
