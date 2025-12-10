@@ -148,7 +148,7 @@ activemq-data/
 *.sage.py
 
 # Environments
-.env
+
 .envrc
 .venv
 env/
@@ -214,8 +214,5 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
-
-.gemini
-.gemini/**
 
 agiles_service/k8s/deployment.yaml
