@@ -86,3 +86,18 @@ Once the Ingress is provisioned (this may take a few minutes), you can get its e
 ```bash
 kubectl get ingress ${LDAP}-agiles-upload-ingress
 ```
+
+
+
+
+
+
+
+
+
+
+### 6. Permissions related stuff
+# Permissions
+gcloud storage buckets add-iam-policy-binding gs://[LDAP]-agiles-video-upload --member="serviceAccount:agiles-gcs-reader@agiletv-workshop.iam.gserviceaccount.com" --role="roles/storage.objectAdmin"
+gcloud projects add-iam-policy-binding agiletv-workshop \ --member='serviceAccount:agiles-gcs-reader@agiletv-workshop.iam.gserviceaccount.com' \ --role='roles/storage.objectAdmin'
+
