@@ -86,3 +86,6 @@ Once the Ingress is provisioned (this may take a few minutes), you can get its e
 ```bash
 kubectl get ingress ${LDAP}-agiles-upload-ingress
 ```
+
+### 5. Once you deploy your image
+kubectl rollout restart deployment/$LDAP-agiles-service -n default
