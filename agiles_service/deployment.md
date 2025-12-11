@@ -45,6 +45,7 @@ gcloud container clusters get-credentials ${CLUSTER_NAME} --zone ${ZONE}
 **Create GCS Bucket:**
 ```bash
 gcloud storage buckets create gs://${BUCKET_NAME} --location=EU
+gcloud storage buckets add-iam-policy-binding gs://${BUCKET_NAME} --member="allUsers" --role="roles/storage.objectViewer"
 ```
 
 ### 2. Build and Push Docker Image
