@@ -88,3 +88,38 @@ def list_files(prefix=None):
     bucket = storage_client.bucket(bucket_name)
 
     return list(bucket.list_blobs(prefix=prefix))
+
+def delete_blob(blob_name):
+    """
+    Deletes a blob from the bucket.
+
+    Args:
+        blob_name (str): The name of the blob to delete.
+    """
+    bucket_name = os.environ.get("GCS_BUCKET_NAME")
+    if not bucket_name:
+        raise ValueError("GCS_BUCKET_NAME environment variable not set.")
+
+    storage_client = get_storage_client()
+    bucket = storage_client.bucket(bucket_name)
+    blob = bucket.blob(blob_name)
+
+    try:
+        blob.delete()
+        logger.info(f"Blob {blob_name} deleted.")
+    except Exception as e:
+        logger.error(f"Failed to delete blob {blob_name}: {e}")
+        raise
+
+def delete_folder(prefix):
+    """
+    Deletes all blobs in the bucket that begin with the prefix.
+    This effectively deletes a 'folder' in GCS.
+
+    Args:
+        prefix (str): The prefix of the blobs to delete.
+    """
+    blobs = list_files(prefix=prefix)
+    for blob in blobs:
+        delete_blob(blob.name)
+    logger.info(f"Deleted all blobs with prefix {prefix}")

@@ -19,6 +19,9 @@ This document outlines the requirements for the "Intelligent Asset Enrichment" M
     -   **Metadata Tags** (Taxonomy).
     -   The **first frame** of the video as a visual **Thumbnail** (extracted using standard Python libraries).
 
+### 3.3. Video Management
+-   **FR-6:** **Video Deletion:** The system must allow users to permanently delete a video. This action must synchronously remove the video file, generated metadata, and thumbnail from GCS.
+
 ### 3.2. User Interface
 -   **FR-4:** **Video List:** A webpage must list all available videos, displaying the AI-generated metadata (Title, Description, Tags) and Thumbnail.
 -   **FR-5:** **Video Player:** Users must be able to click on a video to watch it in a dedicated player view.

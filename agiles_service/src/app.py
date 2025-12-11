@@ -7,7 +7,7 @@ import shutil
 from flask import Flask, render_template, request, redirect, url_for, flash
 from dotenv import load_dotenv
 
-from utils.storage import upload_file, list_files, upload_text
+from utils.storage import upload_file, list_files, upload_text, delete_folder
 from utils.vertex_ai import analyze_video
 from utils.video_processing import extract_first_frame
 
@@ -35,17 +35,17 @@ def index():
     try:
         # List all files in the bucket
         blobs = list_files()
-        
+
         # Organize blobs by video_id
         video_data = {}
-        
+
         for blob in blobs:
             parts = blob.name.split('/')
             if len(parts) == 2:
                 video_id = parts[0]
                 if video_id not in video_data:
                     video_data[video_id] = {'id': video_id}
-                
+
                 if parts[1] == 'video.mp4':
                     video_data[video_id]['video_blob'] = blob
                     video_data[video_id]['url'] = f"https://storage.googleapis.com/{bucket_name}/{blob.name}"
@@ -67,7 +67,7 @@ def index():
                     'description': 'No description available.',
                     'tags': []
                 }
-                
+
                 # Try to load metadata if available
                 if 'metadata_blob' in data:
                     try:
@@ -78,12 +78,12 @@ def index():
                         video_entry['tags'] = metadata.get('tags', [])
                     except Exception as e:
                         logger.error(f"Error reading metadata for {vid}: {e}")
-                
+
                 videos.append(video_entry)
-        
+
         # Sort videos by created_at descending (newest first)
         videos.sort(key=lambda x: x.get('created_at') or '', reverse=True)
-        
+
     except Exception as e:
         logger.error(f"Error listing videos: {e}")
         flash(f"Error retrieving video list: {e}")
@@ -96,34 +96,34 @@ def upload_video():
         if 'video' not in request.files:
             flash('No video file part')
             return redirect(request.url)
-        
+
         file = request.files['video']
-        
+
         if file.filename == '':
             flash('No selected file')
             return redirect(request.url)
-        
+
         if file and allowed_file(file.filename):
             # Create a temporary file to save the uploaded video
             temp_video = tempfile.NamedTemporaryFile(delete=False, suffix=os.path.splitext(file.filename)[1])
             temp_video_path = temp_video.name
-            
+
             try:
                 # Save uploaded chunk to temp file
                 file.save(temp_video_path)
                 temp_video.close() # Close so other processes can access it
-                
+
                 # Generate a unique random ID
                 unique_id = str(uuid.uuid4())
                 bucket_name = os.environ.get("GCS_BUCKET_NAME")
-                
+
                 # US-01: Upload under the path {random_id}/video.mp4
                 destination_path = f"{unique_id}/video.mp4"
-                
+
                 # Re-open temp file to upload to GCS
                 with open(temp_video_path, 'rb') as f:
                     upload_file(f, destination_path, content_type=file.content_type)
-                
+
                 # US-04: Thumbnail Extraction
                 thumbnail_path = extract_first_frame(temp_video_path)
                 if thumbnail_path:
@@ -138,7 +138,7 @@ def upload_video():
                 # US-03: Synchronous AI Metadata Generation
                 gcs_uri = f"gs://{bucket_name}/{destination_path}"
                 logger.info(f"Starting synchronous analysis for {unique_id}...")
-                
+
                 try:
                     metadata = analyze_video(gcs_uri)
                     if metadata:
@@ -151,7 +151,7 @@ def upload_video():
                 except Exception as ai_error:
                     # We don't want to fail the upload if AI fails, just log it
                     logger.error(f"AI Analysis failed: {ai_error}")
-                
+
                 flash('Video uploaded successfully!')
                 return redirect(url_for('index'))
 
@@ -175,11 +175,11 @@ def watch_video(video_id):
     try:
         # List files with the prefix of the video_id
         blobs = list_files(prefix=f"{video_id}/")
-        
+
         if not blobs:
             flash('Video not found.')
             return redirect(url_for('index'))
-            
+
         video_data = {
             'id': video_id,
             'title': video_id,
@@ -188,9 +188,9 @@ def watch_video(video_id):
             'url': None,
             'created_at': None
         }
-        
+
         metadata_blob = None
-        
+
         for blob in blobs:
             parts = blob.name.split('/')
             if len(parts) == 2:
@@ -199,11 +199,11 @@ def watch_video(video_id):
                     video_data['created_at'] = blob.time_created
                 elif parts[1] == 'metadata.json':
                     metadata_blob = blob
-        
+
         if not video_data['url']:
             flash('Video file missing.')
             return redirect(url_for('index'))
-            
+
         # Load metadata if available
         if metadata_blob:
             try:
@@ -221,6 +221,19 @@ def watch_video(video_id):
         logger.error(f"Error retrieving video {video_id}: {e}")
         flash(f"Error loading video: {e}")
         return redirect(url_for('index'))
+
+@app.route('/delete/<video_id>', methods=['POST'])
+def delete_video(video_id):
+    try:
+        # Delete all files with the video_id prefix
+        delete_folder(f"{video_id}/")
+        flash(f"Video {video_id} deleted successfully.")
+        logger.info(f"Deleted video {video_id} and associated files.")
+    except Exception as e:
+        logger.error(f"Error deleting video {video_id}: {e}")
+        flash(f"Error deleting video: {e}")
+
+    return redirect(url_for('index'))
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=8080)

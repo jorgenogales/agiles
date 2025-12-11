@@ -67,6 +67,12 @@ For each video, a "directory" (prefix) is created using a unique ID:
 2.  **Fetch:** App retrieves metadata and generates a signed URL for `{random_id}/video.mp4`.
 3.  **Render:** HTML page with an HTML5 video player and video details.
 
+### 4.4 Video Deletion
+1.  **Request:** User sends `POST /delete/{random_id}` (or DELETE).
+2.  **Locate:** App identifies the GCS prefix `{random_id}/`.
+3.  **Delete:** App lists all blobs under the prefix (video, metadata, thumbnail) and issues a delete command for each.
+4.  **Respond:** Redirect user to the Dashboard.
+
 ## 5. Technology Stack
 -   **Language:** Python 3.9+
 -   **Web Framework:** Flask
