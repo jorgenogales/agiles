@@ -4,15 +4,18 @@ This repo intends to showcase how to tackle software development using AI agents
 
 ## Pre-reqs
 
-* Gemini Code Assist enabled.
-* Gemini CLI installed and configured.
-* A recent Python version available in your system.
+1. **VS Code / Zed**: Install the IDE of your preference. We'll be relaying on gemini CLI to do the lab
+2. **Gemini CLI**: Refer to https://github.com/google-gemini/gemini-cli for installation procedure
+3. **gcloud**: Refr to https://docs.cloud.google.com/sdk/docs/install-sdk for installation procedure
+4. **Clone the lab repo**: git clone -b steps/02-base-app https://github.com/jorgenogales/agiles
+5. **Python**: A recent Python version available in your system.
+
+Once we start the lab part, after lunch, you'll be given an account and there will be a pre-lab work were
+we'll make use of the above tools
 
 ## Steps
 
-If you want to start from scratch, you can check out branch `steps/00-empty-status`. If you'd like to work on an already existing app, you should check out branch `steps/02-base-app` instead. The complete app can be found in `steps/03-complete-app`, which you can of course extend using the same methods described here.
-
-In any case, this is the overall procedure you should use:
+This is the overall procedure you should use:
 
 1. Create (or update) the Product Requirements Document (PRD) based on the info from the CEO's mail.
 2. Create (or update) the Technical Design Document (TDD) based on the PRD. Ensure that all app-wide technical specifications are well defined here. For example:
